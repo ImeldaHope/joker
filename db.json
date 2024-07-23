@@ -1,0 +1,22 @@
+{
+"jokes": [
+    {
+      "id": 1,
+      "type": "general",
+      "setup": "Why don't scientists trust atoms?",
+      "punchline": "Because they make up everything!"
+    },
+    {
+        "id": 2,
+        "type": "general",
+        "setup": "What do you get when you cross a snowman and a vampire?",
+        "punchline": "Frostbite."
+    },
+    {
+        "id": 3,
+        "type": "general",
+        "setup": "Do you think Samson is a genius?",
+        "punchline": "Never."
+    }
+]
+}
