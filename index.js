@@ -20,11 +20,20 @@ function renderJokes(joke){
     const showPunchline = document.createElement('button');
     const nextJoke = document.createElement('button');
 
-    punchline.style.display = 'none';
+    punchline.className = 'hide';
     
     showPunchline.addEventListener('click', () => {
-        punchline.style.display = 'block';
+        if(punchline.className === 'hide'){
+            punchline.className = 'show'
+            showPunchline.textContent = 'Hide Punchline'
+                                  
+       } else {
+            punchline.className = 'hide'
+            showPunchline.textContent = 'Show Punchline'
+       }
     })
+
+    
 
     nextJoke.addEventListener('click', () => {
         jokesDiv.innerHTML = '';
@@ -69,11 +78,12 @@ function renderLocalJokes(mzaha){
     showPunchline.textContent = 'Show Punchline';
     
     showPunchline.addEventListener('click', () => {       
-       if(punchline.style.display === 'none'){
+       if(punchline.className === 'hide'){
+            punchline.className = 'show'
             showPunchline.textContent = 'Hide Punchline'
-            punchline.classList.toggle('show');                      
+                                  
        } else {
-            punchline.classList.toggle('hide')
+            punchline.className = 'hide'
             showPunchline.textContent = 'Show Punchline'
        }
     })   
