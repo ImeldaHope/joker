@@ -66,12 +66,15 @@ fetchLocalJoke(); //Invocation
 function renderLocalJokes(mzaha){
     const localJokesDiv = document.querySelector('.local');
 
+    const jokeDiv = document.createElement('div');
     const type = document.createElement('h4');
     const setup = document.createElement('p');
     const punchline = document.createElement('p');
     const showPunchline = document.createElement('button');
+    const editJoke = document.createElement('button');
     const deleteJoke = document.createElement('button');
-       
+    
+    jokeDiv.id = mzaha.id;
     punchline.className = 'hide';
 
     showPunchline.textContent = 'Show Punchline';
@@ -92,11 +95,17 @@ function renderLocalJokes(mzaha){
         deleteAJoke(mzaha.id)
     })
 
+    editJoke.textContent = 'Edit joke'
+    editJoke.addEventListener('click', () => {      
+        updateJoke(mzaha.id);
+    })
+
     type.textContent = mzaha.type;
     setup.textContent = mzaha.setup;
     punchline.textContent = mzaha.punchline;
 
-    localJokesDiv.append(type, setup, showPunchline, deleteJoke, punchline);    
+    jokeDiv.append(type, setup, showPunchline, editJoke, deleteJoke, punchline); 
+    localJokesDiv.appendChild(jokeDiv)   
 }
 
 
@@ -160,4 +169,43 @@ function deleteAJoke(id){
     .then(() => {
         deletedJoke.remove(id);        
     })
+}
+
+function updateJoke(id){
+    const jokeContainer = document.getElementById(id);
+    const updatedJokeForm = document.createElement('form');
+    const newSetup =  document.createElement('input');
+    const newPunchline = document.createElement('input');
+    const updatedJokeBtn = document.createElement('input');
+
+    newSetup.placeholder = 'Edit joke setup or leave blank';
+    newPunchline.placeholder = 'Edit joke punchline or leave blank';
+
+    updatedJokeBtn.type = 'submit';    
+    updatedJokeBtn.textContent = 'Submit';
+
+    updatedJokeBtn.addEventListener('click', () => {
+
+        //Applies update only on the passed input value otherwise retaining the original input if none is passed
+        const jokeUpdate = {            
+            ...(newSetup.value && { setup: newSetup.value }),
+            ...(newPunchline.value && { punchline: newPunchline.value })
+        };
+
+        fetch(`${localJokesURL}/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept' : 'application/json'
+            },
+            body: JSON.stringify(jokeUpdate)
+        })
+        .then(res => res.json())
+        .then(data => {            
+            renderLocalJokes(data.id)
+        })
+    })
+    updatedJokeForm.append(newSetup, newPunchline, updatedJokeBtn);
+    jokeContainer.appendChild(updatedJokeForm);
+    
 }
