@@ -160,7 +160,7 @@ function postLocalJoke(formInput){
 }
 
 function deleteAJoke(id){
-    const deletedJoke = document.querySelector('.local');
+    const deletedJoke = document.getElementById(id);
 
     fetch(`${localJokesURL}/${id}`, {
         method: 'DELETE'              
@@ -169,6 +169,7 @@ function deleteAJoke(id){
     .then(() => {
         deletedJoke.remove(id);        
     })
+    
 }
 
 function updateJoke(id){

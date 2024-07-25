@@ -17,6 +17,24 @@
       "type": "general",
       "setup": "Do you think Samson is a genius?",
       "punchline": "Never"
+    },
+    {
+      "id": "da81",
+      "type": "Dad jokes",
+      "setup": "Why did the scarecrow win an award?",
+      "punchline": "Because he was outstanding in his field!"
+    },
+    {
+      "id": "ff28",
+      "type": "Dad jokes",
+      "setup": "Because he was outstanding in his field!",
+      "punchline": "Because they don't have the guts"
+    },
+    {
+      "id": "7c1a",
+      "type": "Dad joke",
+      "setup": "How does a penguin build its house?",
+      "punchline": "Igloos it together!"
     }
   ]
 }
