@@ -6,6 +6,29 @@
     display: none;
 }
 
+.local-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-container{
+    display: block;
+    margin-right: 0px;
+    width: 30%;
+}
+
+form{
+    display: flex;
+    
+    flex-direction: column;    
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+}
+
 /* Samson burning the house to kill the rat!!! */
 /* button {
     height: 30px;
