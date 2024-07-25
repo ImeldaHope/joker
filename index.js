@@ -31,9 +31,7 @@ function renderJokes(joke){
             punchline.className = 'hide'
             showPunchline.textContent = 'Show Punchline'
        }
-    })
-
-    
+    })   
 
     nextJoke.addEventListener('click', () => {
         jokesDiv.innerHTML = '';
@@ -72,6 +70,7 @@ function renderLocalJokes(mzaha){
     const setup = document.createElement('p');
     const punchline = document.createElement('p');
     const showPunchline = document.createElement('button');
+    const deleteJoke = document.createElement('button');
        
     punchline.className = 'hide';
 
@@ -88,13 +87,77 @@ function renderLocalJokes(mzaha){
        }
     })   
     
+    deleteJoke.textContent = 'Delete Joke'
+    deleteJoke.addEventListener('click', () => {
+        deleteAJoke(mzaha.id)
+    })
 
     type.textContent = mzaha.type;
     setup.textContent = mzaha.setup;
     punchline.textContent = mzaha.punchline;
 
-    localJokesDiv.append(type, setup, showPunchline, punchline);
-    
+    localJokesDiv.append(type, setup, showPunchline, deleteJoke, punchline);    
 }
 
 
+function renderJokeForm(){
+    const formDiv = document.querySelector('.new-joke');
+    const jokeForm = document.createElement('form');
+    const jokeType = document.createElement('input'); 
+    const jokeSetup = document.createElement('input'); 
+    const jokePunchline = document.createElement('input'); 
+    const submitBtn = document.createElement('input'); 
+
+    formDiv.className = 'form-container'
+    submitBtn.type = 'submit'
+    
+    jokeType.placeholder = 'Enter type of joke'
+    jokeSetup.placeholder = 'Enter setup of joke'
+    jokePunchline.placeholder = 'Enter punchline'
+    submitBtn.placeholder = 'Submit'
+
+    jokeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const formData = {
+            type: jokeType.value,
+            setup: jokeSetup.value,
+            punchline: jokePunchline.value,
+        };
+
+        postLocalJoke(formData);
+        jokeForm.reset();
+    })
+    jokeForm.append(jokeType, jokeSetup, jokePunchline, submitBtn);
+    formDiv.append(jokeForm)
+}
+
+renderJokeForm()
+
+function postLocalJoke(formInput){
+    
+    fetch(localJokesURL, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json'
+        },
+        body: JSON.stringify(formInput)
+    })
+    .then(res => res.json())
+    .then(data => {
+        renderLocalJokes(data)
+    })
+}
+
+function deleteAJoke(id){
+    const deletedJoke = document.querySelector('.local');
+
+    fetch(`${localJokesURL}/${id}`, {
+        method: 'DELETE'              
+    })
+    .then(res => res.json())
+    .then(() => {
+        deletedJoke.remove(id);        
+    })
+}
